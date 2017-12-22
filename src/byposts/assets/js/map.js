@@ -1,5 +1,5 @@
-// var colors = ['#ffffe5', '#bdbdbd', '#a6bddb', '#dfc27d', '#feb24c', '#74c476', '#7a0177', '#045a8d', '#800026', '#252525'];
-var colors = ['#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#fc4e2a','#e31a1c','#bd0026','#800026', '#252525'];
+var colors = ['#ffffe5', '#bdbdbd', '#a6bddb', '#dfc27d', '#feb24c', '#74c476', '#7a0177', '#045a8d', '#800026', '#252525'];
+// var monocolors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026', '#252525'];
 var importGrades = [0, 1000, 5000, 10000, 15000, 20000, 25000, 30000, 40000];
 var exportGrades = [0, 1000, 5000, 10000, 15000, 20000, 30000, 40000, 50000];
 var validSub = [];
@@ -48,24 +48,22 @@ function processData(curData, map) {
     // )
 
     var valueArray = curData['vol'];
-    var areaArray = curData['suburb'];
+    var postArray = curData['post'];
+    var suburbArray = curData['suburb'];
 
-    function findThroughAreaArray(curSub) {
-        for (var i = 0; i < areaArray.length; i++) {
-            if (areaArray[i].indexOf(curSub) > -1) return i;
-        }
-        return -1;
+    function findThroughAreaArray(post) {
+        return postArray.indexOf(post);
     }
 
     resultArea.forEach(sub => {
-        var curSub = sub.properties['wa_local_2'];
-        var idx = findThroughAreaArray(curSub);
+        var post = parseInt(sub.properties['name']);
+        var idx = findThroughAreaArray(post);
         if (idx === -1) {
             sub.properties.value = 0;
         } else {
             sub.properties.value = valueArray[idx];
-            sub.properties.postcode = curData['post'][idx];
-            validSub.push(areaArray[idx]);
+            sub.properties.suburb = suburbArray[idx].join(', ');
+            validSub.push(post);
         }
     });
 
@@ -161,12 +159,9 @@ function startRun() {
 
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        if (props) {
-            this._div.style.display = "block";
-            this._div.innerHTML = '<h4>Suburb:</h4>' + '<br />' + props['postcode'] + '<b>' + props['wa_local_2'] + '</b><br />' + props.value;
-        } else {
-            this._div.style.display = "none";
-        }
+        this._div.innerHTML = props ?
+            '<b> Postcode:</b> ' + props.name  + (props.suburb ? '<br />' + props.suburb : '') + '<br /><b>Volume:</b> ' + props.value
+            : '';
     };
 
 
@@ -181,13 +176,7 @@ function startRun() {
 
     addLegend(map);
 
-    console.log(resultArea);
-
     removeControlElement();
-
-    for (var sub of curData['suburb']) {
-        if (!validSub.includes(sub)) console.log("Sub cannot find: " + sub);
-    }
 }
 
 
