@@ -12,7 +12,6 @@ if (document.title == 'imports') {
     grades = exportGrades;
 }
 
-
 function getColor(value) { // mapping value to colors uniformly dispatch
     var i = 0;
     while (value > grades[i]) i++;
@@ -42,11 +41,8 @@ function getStyle(feature) {
 }
 
 function processData(curData, map) {
-    var resultArea = wasub['features'];
-    // .filter(sub =>
-    //     areaArray.includes(sub['properties']['wa_local_2'])
-    // )
-
+    var resultArea = wasub['features'].filter(sub => sub.properties["STATE_2006"] == 5);
+    
     var valueArray = curData['vol'];
     var postArray = curData['post'];
     var suburbArray = curData['suburb'];
