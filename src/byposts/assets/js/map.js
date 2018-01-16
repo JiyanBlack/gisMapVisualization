@@ -42,7 +42,7 @@ function getStyle(feature) {
 
 function processData(curData, map) {
     var resultArea = wasub['features'].filter(sub => sub.properties["STATE_2006"] == 5);
-    
+
     var valueArray = curData['vol'];
     var postArray = curData['post'];
     var suburbArray = curData['suburb'];
@@ -155,9 +155,13 @@ function startRun() {
 
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
-        this._div.innerHTML = props ?
-            '<b> Postcode:</b> ' + props.name  + (props.suburb ? '<br />' + props.suburb : '') + '<br /><b>Volume:</b> ' + props.value
-            : '';
+        if (props) {
+            this._div.innerHTML = '<b> Postcode:</b> ' + props.name + (props.suburb ? '<br />' + props.suburb : '') + '<br /><b>Volume:</b> ' + props.value;
+            this._div.style.visibility = "visible";
+        } else {
+            this._div.innerHTML = '';
+            this._div.style.visibility = "hidden";
+        }
     };
 
 
