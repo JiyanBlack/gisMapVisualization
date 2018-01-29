@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 // var colors = ['#ffffe5', '#bdbdbd', '#a6bddb', '#dfc27d', '#feb24c', '#74c476', '#7a0177', '#045a8d', '#800026', '#252525'];
 var colors = ['#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#fc4e2a','#e31a1c','#bd0026','#800026', '#252525'];
+=======
+var colors = ['#ffffe5', '#bdbdbd', '#a6bddb', '#dfc27d', '#feb24c', '#74c476', '#7a0177', '#045a8d', '#800026', '#252525'];
+// var monocolors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026', '#252525'];
+>>>>>>> eedf73cc0efd0558ec20f53389f87db351b7e4f9
 var importGrades = [0, 1000, 5000, 10000, 15000, 20000, 25000, 30000, 40000];
 var exportGrades = [0, 1000, 5000, 10000, 15000, 20000, 30000, 40000, 50000];
 var validSub = [];
@@ -12,7 +17,10 @@ if (document.title == 'imports') {
     grades = exportGrades;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> eedf73cc0efd0558ec20f53389f87db351b7e4f9
 function getColor(value) { // mapping value to colors uniformly dispatch
     var i = 0;
     while (value > grades[i]) i++;
@@ -42,6 +50,7 @@ function getStyle(feature) {
 }
 
 function processData(curData, map) {
+<<<<<<< HEAD
     var resultArea = wasub['features'];
     // .filter(sub =>
     //     areaArray.includes(sub['properties']['wa_local_2'])
@@ -60,12 +69,32 @@ function processData(curData, map) {
     resultArea.forEach(sub => {
         var curSub = sub.properties['wa_local_2'];
         var idx = findThroughAreaArray(curSub);
+=======
+    var resultArea = wasub['features'].filter(sub => sub.properties["STATE_2006"] == 5);
+
+    var valueArray = curData['vol'];
+    var postArray = curData['post'];
+    var suburbArray = curData['suburb'];
+
+    function findThroughAreaArray(post) {
+        return postArray.indexOf(post);
+    }
+
+    resultArea.forEach(sub => {
+        var post = parseInt(sub.properties['name']);
+        var idx = findThroughAreaArray(post);
+>>>>>>> eedf73cc0efd0558ec20f53389f87db351b7e4f9
         if (idx === -1) {
             sub.properties.value = 0;
         } else {
             sub.properties.value = valueArray[idx];
+<<<<<<< HEAD
             sub.properties.postcode = curData['post'][idx];
             validSub.push(areaArray[idx]);
+=======
+            sub.properties.suburb = suburbArray[idx].join(', ');
+            validSub.push(post);
+>>>>>>> eedf73cc0efd0558ec20f53389f87db351b7e4f9
         }
     });
 
@@ -162,10 +191,18 @@ function startRun() {
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
         if (props) {
+<<<<<<< HEAD
             this._div.style.display = "block";
             this._div.innerHTML = '<h4>Suburb:</h4>' + '<br />' + props['postcode'] + '<b>' + props['wa_local_2'] + '</b><br />' + props.value;
         } else {
             this._div.style.display = "none";
+=======
+            this._div.innerHTML = '<b> Postcode:</b> ' + props.name + (props.suburb ? '<br />' + props.suburb : '') + '<br /><b>Volume:</b> ' + props.value;
+            this._div.style.visibility = "visible";
+        } else {
+            this._div.innerHTML = '';
+            this._div.style.visibility = "hidden";
+>>>>>>> eedf73cc0efd0558ec20f53389f87db351b7e4f9
         }
     };
 
@@ -181,6 +218,7 @@ function startRun() {
 
     addLegend(map);
 
+<<<<<<< HEAD
     console.log(resultArea);
 
     removeControlElement();
@@ -188,6 +226,9 @@ function startRun() {
     for (var sub of curData['suburb']) {
         if (!validSub.includes(sub)) console.log("Sub cannot find: " + sub);
     }
+=======
+    removeControlElement();
+>>>>>>> eedf73cc0efd0558ec20f53389f87db351b7e4f9
 }
 
 
