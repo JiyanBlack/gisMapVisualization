@@ -1,7 +1,7 @@
 var colors = ['#ffffe5', '#bdbdbd', '#a6bddb', '#dfc27d', '#feb24c', '#74c476', '#7a0177', '#045a8d', '#800026', '#252525'];
 // var monocolors = ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026', '#252525'];
 var importGrades = [0, 1000, 5000, 10000, 15000, 20000, 25000, 30000, 40000];
-var exportGrades = [0, 1000, 5000, 10000, 15000, 20000, 30000, 40000, 50000];
+var exportGrades = [0, 1000, 2500, 5000, 7500, 10000, 15000, 20000, 30000];
 var validSub = [];
 var curData, grades;
 if (document.title == 'imports') {
